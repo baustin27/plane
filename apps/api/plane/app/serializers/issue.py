@@ -799,6 +799,17 @@ class IssueSerializer(DynamicBaseSerializer):
             "link_count",
             "is_draft",
             "archived_at",
+            # Agent-first fields
+            "assigned_agent",
+            "agent_context",
+            "auto_executable",
+            "human_review_required",
+            "agent_status",
+            "blocked_reason",
+            "artifacts",
+            "claimed_at",
+            "verified_at",
+            "verified_by",
         ]
         read_only_fields = fields
 
@@ -857,6 +868,17 @@ class IssueListDetailSerializer(serializers.Serializer):
             "sub_issues_count": instance.sub_issues_count,
             "attachment_count": instance.attachment_count,
             "link_count": instance.link_count,
+            # Agent-first fields
+            "assigned_agent": instance.assigned_agent,
+            "agent_context": instance.agent_context,
+            "auto_executable": instance.auto_executable,
+            "human_review_required": instance.human_review_required,
+            "agent_status": instance.agent_status,
+            "blocked_reason": instance.blocked_reason,
+            "artifacts": instance.artifacts,
+            "claimed_at": instance.claimed_at,
+            "verified_at": instance.verified_at,
+            "verified_by": instance.verified_by_id,
         }
 
         # Handle expanded fields only when requested - using direct field access

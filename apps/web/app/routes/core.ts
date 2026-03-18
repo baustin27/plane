@@ -59,6 +59,11 @@ export const coreRoutes: RouteConfigEntry[] = [
         // WORKSPACE LEVEL ROUTES
         // --------------------------------------------------------------------
 
+        // Agents Dashboard (must be before :workspaceSlug)
+        layout("./(all)/[workspaceSlug]/(projects)/agents/layout.tsx", [
+          route(":workspaceSlug/agents", "./(all)/[workspaceSlug]/(projects)/agents/page.tsx"),
+        ]),
+
         // Workspace Home
         route(":workspaceSlug", "./(all)/[workspaceSlug]/(projects)/page.tsx"),
 

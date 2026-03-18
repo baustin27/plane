@@ -167,6 +167,68 @@ class Issue(ProjectBaseModel):
         blank=True,
     )
 
+    # Agent-first fields
+    assigned_agent = models.CharField(
+        max_length=255,
+        null=True,
+        blank=True,
+        help_text="ID of the agent assigned to this task"
+    )
+    agent_context = models.JSONField(
+        default=dict,
+        blank=True,
+        help_text="Agent-specific context: decisions, discoveries, state"
+    )
+    auto_executable = models.BooleanField(
+        default=False,
+        help_text="Agent can start without human approval"
+    )
+    human_review_required = models.BooleanField(
+        default=True,
+        help_text="Requires human review after agent completion"
+    )
+    agent_status = models.CharField(
+        max_length=20,
+        choices=[
+            ("unclaimed", "Unclaimed"),
+            ("claimed", "Claimed"),
+            ("in_progress", "In Progress"),
+            ("blocked", "Blocked"),
+            ("completed", "Completed"),
+            ("verified", "Verified"),
+        ],
+        default="unclaimed",
+        help_text="Agent workflow status"
+    )
+    blocked_reason = models.TextField(
+        null=True,
+        blank=True,
+        help_text="Reason task is blocked"
+    )
+    artifacts = models.JSONField(
+        default=list,
+        blank=True,
+        help_text="List of artifacts: [{type, url, description, timestamp}]"
+    )
+    claimed_at = models.DateTimeField(
+        null=True,
+        blank=True,
+        help_text="When agent claimed this task"
+    )
+    verified_at = models.DateTimeField(
+        null=True,
+        blank=True,
+        help_text="When human verified the completed work"
+    )
+    verified_by = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        related_name="verified_issues",
+        help_text="User who verified this task"
+    )
+
     issue_objects = IssueManager()
 
     class Meta:

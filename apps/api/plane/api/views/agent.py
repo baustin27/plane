@@ -39,7 +39,7 @@ def list_available_tasks(request, project_id=None):
     
     queryset = Issue.issue_objects.filter(
         agent_status='unclaimed',
-        draft=False,
+        is_draft=False,
         project__archived_at__isnull=True,
     )
     

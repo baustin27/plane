@@ -17,7 +17,7 @@ class Migration(migrations.Migration):
     """
     
     dependencies = [
-        ('db', '0001_initial'),  # Adjust to latest migration
+        ('db', '0120_issueview_archived_at'),
     ]
     
     operations = [

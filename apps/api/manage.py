@@ -5,9 +5,15 @@
 
 import os
 import sys
+from pathlib import Path
+
+# Load .env file
+from dotenv import load_dotenv
+env_path = Path('.') / '.env'
+load_dotenv(dotenv_path=env_path)
 
 if __name__ == "__main__":
-    os.environ.setdefault("DJANGO_SETTINGS_MODULE", "plane.settings.production")
+    os.environ.setdefault("DJANGO_SETTINGS_MODULE", "plane.settings.local")
     try:
         from django.core.management import execute_from_command_line
     except ImportError as exc:

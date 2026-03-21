@@ -319,6 +319,9 @@ SESSION_COOKIE_NAME = os.environ.get("SESSION_COOKIE_NAME", "session-id")
 SESSION_COOKIE_DOMAIN = os.environ.get("COOKIE_DOMAIN", None)
 SESSION_COOKIE_SAMESITE = "Lax"  # Set to None for cross-port cookie handling
 SESSION_SAVE_EVERY_REQUEST = os.environ.get("SESSION_SAVE_EVERY_REQUEST", "0") == "1"
+# PLANEAGENT FIX: Set SameSite=None for cross-origin requests (frontend:80 <-> api:8000)
+# This is required when frontend and API run on different ports
+SESSION_COOKIE_SAMESITE = os.environ.get("SESSION_COOKIE_SAMESITE", "None")
 
 # Admin Cookie
 ADMIN_SESSION_COOKIE_NAME = "admin-session-id"
@@ -331,6 +334,8 @@ CSRF_TRUSTED_ORIGINS = cors_allowed_origins
 CSRF_COOKIE_DOMAIN = os.environ.get("COOKIE_DOMAIN", None)
 CSRF_COOKIE_SAMESITE = "Lax"
 CSRF_FAILURE_VIEW = "plane.authentication.views.common.csrf_failure"
+# PLANEAGENT FIX: Set SameSite=None for cross-origin CSRF cookies (frontend:80 <-> api:8000)
+CSRF_COOKIE_SAMESITE = os.environ.get("CSRF_COOKIE_SAMESITE", "None")
 
 ######  Base URLs ######
 

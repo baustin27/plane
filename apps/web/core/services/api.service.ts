@@ -26,10 +26,12 @@ export abstract class APIService {
     this.axiosInstance.interceptors.response.use(
       (response) => response,
       (error) => {
-        if (error.response && error.response.status === 401) {
-          const currentPath = window.location.pathname;
-          window.location.replace(`/${currentPath ? `?next_path=${currentPath}` : ``}`);
-        }
+        // PLANEAGENT: Removed 401 redirect to prevent login loops
+        // The auth wrapper will handle unauthenticated state
+        // if (error.response && error.response.status === 401) {
+        //   const currentPath = window.location.pathname;
+        //   window.location.replace(`/${currentPath ? `?next_path=${currentPath}` : ``}`);
+        // }
         return Promise.reject(error);
       }
     );
@@ -54,11 +56,7 @@ export abstract class APIService {
     return this.axiosInstance.patch(url, data, config);
   }
 
-  delete(url: string, data?: any, config: AxiosRequestConfig = {}) {
-    return this.axiosInstance.delete(url, { data, ...config });
-  }
-
-  request(config = {}) {
-    return this.axiosInstance(config);
+  delete(url: string, config: AxiosRequestConfig = {}) {
+    return this.axiosInstance.delete(url, config);
   }
 }
